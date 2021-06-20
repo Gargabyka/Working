@@ -10,66 +10,26 @@ namespace Working
     {
         public List<Employee> employees = new List<Employee>();
         public List<Intern> interns = new List<Intern>();
-        
-        // создание нового стажера
-        public void NewIntern(List<Intern> interns)
-        {
-            Console.WriteLine("New ID? ");
-            int id = Convert.ToInt32(Console.ReadLine());
-            foreach (var intern in interns)
-            {
-                if (intern.ID == id)
-                {
-                    Console.Clear();
-                    throw new Exception("This ID already exists");
-                }
-            }
-            Console.WriteLine("Name of new intern?: ");
-            var name = Console.ReadLine();
-            Console.WriteLine("Education Level? Bachelor, Specialist or Master? ");
-            var education = Console.ReadLine();
-            Console.WriteLine("Do you want to hire that person? write true or false");
-            bool hire = Convert.ToBoolean(Console.ReadLine());
 
-            interns.Add(new Intern(id, name, education, hire));
-            Console.WriteLine("Done! Press any key to continue.");
-            Console.ReadKey();
+        public void CreateUser(int number)
+        {
+            var employee = new Employee();
+            var intern = new Intern();
+
+            switch (number)
+            {
+                case 1:
+                    employee.NewEmployee(employees);
+                    break;
+                case 2:
+                    intern.NewIntern(interns);
+                    break;
+                default:
+                    Console.WriteLine("Incorrect command line");
+                    break;
+            }
         }
         
-        // создание нового работника
-        public void NewEmployee(List<Employee> employees)
-        {
-            Console.WriteLine("New ID? ");
-            int id = Convert.ToInt32(Console.ReadLine());
-            foreach (var employee in employees)
-            {
-                if (employee.ID == id)
-                {
-                    Console.Clear();
-                    throw new Exception("This ID already exists");
-                }
-            }
-            Console.WriteLine("Name of new employee?: ");
-            string name = Console.ReadLine();
-            Console.WriteLine("Salary?");
-            int salary = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Experience?");
-            int experience = Convert.ToInt32(Console.ReadLine());
-            DateTime hiredate;
-            while (true)
-            {
-                Console.Write("Hire Date? (yyyy.mm.dd.):");
-                if (DateTime.TryParse(Console.ReadLine(), out hiredate)) break;
-                else
-                {
-                    Console.WriteLine("Error format");
-                }
-            }
-            employees.Add(new Employee(id, name, salary, experience, hiredate));
-            Console.WriteLine("Done! Press any key to continue.");
-            Console.ReadKey();
-            Save(employees);
-        }
         
         //показать список всех (работники + стажеры)
         public void ShowEmployees(List<Employee> employees, List<Intern> interns)
@@ -106,7 +66,7 @@ namespace Working
         }
 
         // сохранить в файл
-        void Save(List<Employee> employees)
+        public void Save(List<Employee> employees)
             {
                 var serializer = new BinaryFormatter();
                 using (FileStream fs = new FileStream("employees.dat", FileMode.OpenOrCreate))

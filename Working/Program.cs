@@ -32,10 +32,10 @@ namespace Working
                     switch (command)
                     {
                         case 1:
-                            working.NewEmployee(working.employees);
+                            working.CreateUser(command);
                             break;
                         case 2:
-                            working.NewIntern(working.interns);
+                            working.CreateUser(command);
                             break;
                         case 3:
                             working.Hiring(working.interns);
